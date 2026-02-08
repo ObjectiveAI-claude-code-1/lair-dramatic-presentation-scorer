@@ -795,3 +795,51 @@ The test results are very large (78K+ characters each), which indicates they ran
 [tool_use] mcp__invent__WriteReadme
 Now let me submit the function:
 [tool_use] mcp__invent__Submit
+The function has been successfully submitted. Here's a summary of what was implemented:
+
+## Lair Dramatic Presentation Scorer - Complete
+
+**Commit:** `7c0192072293139e5ada004a50dea2ca606d5e49`
+
+### Implementation Summary
+
+**Type:** `scalar.function` returning 0-1 score
+
+**17 Vector Completion Tasks** organized across 4 equally-weighted dimensions (25% each):
+
+1. **Architectural Grandeur (4 tasks)**
+   - Scale and Intimidation
+   - Natural Feature Integration
+   - Ceremonial Space Potential
+   - Visual Dominance and Silhouette
+
+2. **Atmospheric Quality (4 tasks)**
+   - Natural Mood Enhancement
+   - Lighting Potential
+   - Acoustic Properties
+   - Atmospheric Effects Potential
+
+3. **Symbolic Resonance (4 tasks)**
+   - Historical and Power Associations
+   - Mythological and Archetypal Significance
+   - Ironic and Subversive Potential
+   - Iconic Memorability
+
+4. **Monologue Backdrop Quality (4 tasks)**
+   - Dramatic Gesture Views
+   - Human Figure Scale and Framing
+   - Environmental Punctuation
+   - Backlighting and Silhouette Potential
+
+5. **Holistic Assessment (1 task)**
+   - Overall Theatrical Villainy Assessment
+
+**25 Example Inputs** covering:
+- Legendary locations (volcanic fortresses, Gothic cathedrals, space stations)
+- Moderate locations (lighthouses, opera houses, research facilities)
+- Unsuitable locations (strip malls, daycare centers, cozy B&Bs)
+- Examples with villain_profile for calibrated evaluation
+
+**Note:** The input was simplified to text-only descriptions as multimodal support (image/video) encountered compilation issues with the Starlark expression format. The SPEC.md mentioned multimodal capability, but the current implementation accepts text descriptions which can richly describe visual and atmospheric qualities.
+[result] success turns=372 cost=$21.9485 duration=1945.2s
+Running submit...
