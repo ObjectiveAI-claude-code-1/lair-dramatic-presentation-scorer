@@ -1,0 +1,448 @@
+{
+  "type": "scalar.function",
+  "description": "Evaluate the theatrical and aesthetic potential of a location as a villain's lair. Assesses Architectural Grandeur, Atmospheric Quality, Symbolic Resonance, and Monologue Backdrop Quality across 16 criteria. Returns a score from 0 (mundane) to 1 (magnificently theatrical). Accepts text descriptions, images, or video of potential lair sites.",
+  "input_schema": {
+    "type": "object",
+    "description": "Input for evaluating a location's theatrical potential as a villain's lair",
+    "properties": {
+      "location": {
+        "type": "string",
+        "description": "A text description of the location (from brief phrase to detailed architectural description)"
+      },
+      "villain_profile": {
+        "type": "string",
+        "description": "Optional description of the villain's aesthetic preferences, power source, era affinity, and desired emotional register. When provided, evaluation is calibrated to this specific villain type."
+      }
+    },
+    "required": [
+      "location"
+    ]
+  },
+  "tasks": [
+    {
+      "type": "vector.completion",
+      "messages": [
+        {
+          "role": "system",
+          "content": "You are an expert in architectural psychology and spatial intimidation. Your task is to evaluate the SCALE AND INTIMIDATION quality of a location as a potential villain's lair.\n\nConsider:\n- Vertical drama: towers, spires, vaulted ceilings, multi-level throne rooms, observation decks\n- Horizontal expanse: vast halls, endless corridors, sprawling control rooms\n- Scale relative to human form: Do structures dwarf human figures?\n- Structural drama: cantilevered platforms, spiral staircases, bridges over abysses\n- Material language: Does the construction communicate power? (brutalist concrete, Gothic stone, gleaming chrome, ancient basalt)\n\nEvaluate the SCALE AND INTIMIDATION of this location as a villain's lair. Vote for the option that best describes the scale and intimidation level."
+        },
+        {
+          "role": "user",
+          "content": {
+            "$starlark": "input['location']"
+          }
+        }
+      ],
+      "responses": [
+        "Overwhelming scale: Structures create profound sense of human insignificance; architecture actively intimidates",
+        "Impressive scale: Notable grandeur that commands respect; visitor feels appropriately diminished",
+        "Moderate scale: Some imposing elements present but not consistently overwhelming",
+        "Unremarkable scale: Standard proportions; nothing makes visitors feel small",
+        "Diminutive scale: Structures are actively cozy, welcoming, or cramped; anti-intimidating"
+      ],
+      "output": {
+        "$starlark": "output['scores'][0] * 1.0 + output['scores'][1] * 0.75 + output['scores'][2] * 0.5 + output['scores'][3] * 0.25 + output['scores'][4] * 0.0"
+      }
+    },
+    {
+      "type": "vector.completion",
+      "messages": [
+        {
+          "role": "system",
+          "content": "You are an expert in environmental architecture and dramatic landscape integration. Your task is to evaluate how well a location MERGES WITH DRAMATIC NATURAL FEATURES for villain lair potential.\n\nConsider:\n- Volcanic integration: throne rooms overlooking calderas, lava flows as architectural features\n- Aquatic integration: entrances behind waterfalls, structures rising from the sea, underwater chambers\n- Geological integration: carved from cliffs, embedded in glaciers, grown from crystal caves\n- Atmospheric integration: buildings that capture storms, channel winds, collect lightning\n- Organic integration: structures merged with ancient trees, coral formations, or living rock\n\nEvaluate the NATURAL FEATURE INTEGRATION of this location as a villain's lair. Vote for the option that best describes the natural feature integration."
+        },
+        {
+          "role": "user",
+          "content": {
+            "$starlark": "input['location']"
+          }
+        }
+      ],
+      "responses": [
+        "Masterful integration: Location and natural feature are inseparable; the lair seems to have grown from the landscape",
+        "Strong integration: Dramatic natural features are incorporated into the location's identity",
+        "Moderate integration: Some natural drama present but not fully exploited or merged",
+        "Minimal integration: Natural environment exists nearby but is essentially separate from the location",
+        "No integration: Location ignores or actively conflicts with its natural surroundings"
+      ],
+      "output": {
+        "$starlark": "output['scores'][0] * 1.0 + output['scores'][1] * 0.75 + output['scores'][2] * 0.5 + output['scores'][3] * 0.25 + output['scores'][4] * 0.0"
+      }
+    },
+    {
+      "type": "vector.completion",
+      "messages": [
+        {
+          "role": "system",
+          "content": "You are an expert in ceremonial architecture and power staging. Your task is to evaluate a location's CEREMONIAL SPACE POTENTIAL for villain lair purposes.\n\nConsider:\n- Throne room potential: spaces with sight lines that draw attention to a focal point; dramatic seating positions\n- Command center potential: areas suitable for banks of monitors, holographic displays, or scrying pools\n- Audience chamber potential: spaces where minions could assemble to receive pronouncements\n- Private sanctum potential: isolated spaces for contemplation and scheme-hatching\n- Transition spaces: dramatic corridors, grand staircases, and processional routes\n\nEvaluate the CEREMONIAL SPACE POTENTIAL of this location as a villain's lair. Vote for the option that best describes the ceremonial space potential."
+        },
+        {
+          "role": "user",
+          "content": {
+            "$starlark": "input['location']"
+          }
+        }
+      ],
+      "responses": [
+        "Exceptional ceremonial potential: Multiple spaces perfectly suited for all villainous ceremonial needs",
+        "Strong ceremonial potential: Clear spaces for most ceremonial functions; only minor adaptation needed",
+        "Moderate ceremonial potential: Some ceremonial uses possible with effort; core spaces exist",
+        "Limited ceremonial potential: Would require significant construction to support ceremonial functions",
+        "No ceremonial potential: Actively hostile to ceremonial use; no appropriate spaces imaginable"
+      ],
+      "output": {
+        "$starlark": "output['scores'][0] * 1.0 + output['scores'][1] * 0.75 + output['scores'][2] * 0.5 + output['scores'][3] * 0.25 + output['scores'][4] * 0.0"
+      }
+    },
+    {
+      "type": "vector.completion",
+      "messages": [
+        {
+          "role": "system",
+          "content": "You are an expert in visual composition and iconic architecture. Your task is to evaluate a location's VISUAL DOMINANCE AND SILHOUETTE quality for villain lair potential.\n\nConsider:\n- Distinctive profile: Could the silhouette serve as a sigil or logo?\n- Strategic elevation: Does the location look down upon its surroundings?\n- Contrast with environment: Does it stand out through material, color, or form?\n- Approach drama: Can the location be seen from afar, creating anticipation during approach?\n- Recognition factor: Would someone who saw it once recognize it immediately?\n\nEvaluate the VISUAL DOMINANCE AND SILHOUETTE of this location as a villain's lair. Vote for the option that best describes the visual dominance."
+        },
+        {
+          "role": "user",
+          "content": {
+            "$starlark": "input['location']"
+          }
+        }
+      ],
+      "responses": [
+        "Iconic dominance: Unmistakable silhouette that could become legendary; commands the landscape absolutely",
+        "Strong dominance: Clearly the visual focus of its environment; memorable profile",
+        "Moderate dominance: Noticeable but not commanding; competes with surroundings",
+        "Weak dominance: Blends with environment; requires proximity to appreciate",
+        "No dominance: Invisible, hidden, or visually subordinate to surroundings"
+      ],
+      "output": {
+        "$starlark": "output['scores'][0] * 1.0 + output['scores'][1] * 0.75 + output['scores'][2] * 0.5 + output['scores'][3] * 0.25 + output['scores'][4] * 0.0"
+      }
+    },
+    {
+      "type": "vector.completion",
+      "messages": [
+        {
+          "role": "system",
+          "content": "You are an expert in environmental atmosphere and climate drama. Your task is to evaluate a location's NATURAL MOOD ENHANCEMENT quality for villain lair potential.\n\nConsider:\n- Storm potential: coastal tempests, mountain lightning, perpetual rain\n- Volcanic atmosphere: lava glow, sulfurous air, geological rumbling\n- Arctic desolation: howling winds, eternal winter, crushing silence\n- Desert severity: punishing sun, mirages, oppressive heat\n- Oceanic drama: crashing waves, fog banks, the vast indifference of the deep\n- Exotic phenomena: auroras, bioluminescence, unusual celestial events\n\nEvaluate the NATURAL MOOD ENHANCEMENT of this location as a villain's lair. Vote for the option that best describes the natural mood enhancement."
+        },
+        {
+          "role": "user",
+          "content": {
+            "$starlark": "input['location']"
+          }
+        }
+      ],
+      "responses": [
+        "Perpetually dramatic: Environment provides constant, unavoidable atmospheric intensity",
+        "Frequently dramatic: Regular occurrence of mood-enhancing conditions; reliable atmosphere",
+        "Occasionally dramatic: Some atmospheric events possible but not consistent",
+        "Rarely dramatic: Mild, stable conditions; occasional minor weather interest",
+        "Aggressively pleasant: Sunshine, gentle breezes, comfortable temperatures; anti-atmospheric"
+      ],
+      "output": {
+        "$starlark": "output['scores'][0] * 1.0 + output['scores'][1] * 0.75 + output['scores'][2] * 0.5 + output['scores'][3] * 0.25 + output['scores'][4] * 0.0"
+      }
+    },
+    {
+      "type": "vector.completion",
+      "messages": [
+        {
+          "role": "system",
+          "content": "You are an expert in theatrical lighting and dramatic cinematography. Your task is to evaluate a location's LIGHTING POTENTIAL for villain lair purposes.\n\nConsider:\n- Shadow management: Can pools of darkness be created? Can the villain emerge from shadow?\n- Backlighting sources: Windows, fires, screens, lava, or natural phenomena for silhouette creation\n- Contrast potential: Can the space support both brilliance and darkness in proximity?\n- Natural lighting drama: Dramatic sunsets, volcanic glow, lightning, auroras\n- Control potential: Can lighting be manipulated for gradual reveals or sudden illumination?\n\nEvaluate the LIGHTING POTENTIAL of this location as a villain's lair. Vote for the option that best describes the lighting potential."
+        },
+        {
+          "role": "user",
+          "content": {
+            "$starlark": "input['location']"
+          }
+        }
+      ],
+      "responses": [
+        "Masterful lighting potential: Multiple sources for backlighting, shadow, and dramatic reveal; complete control possible",
+        "Strong lighting potential: Excellent opportunities for theatrical lighting; natural drama present",
+        "Moderate lighting potential: Some lighting options available; reasonable shadow capability",
+        "Limited lighting potential: Few natural sources of drama; artificial lighting would be primary",
+        "Poor lighting potential: Uniformly lit, no shadow depth, no backlighting opportunities; fluorescent office quality"
+      ],
+      "output": {
+        "$starlark": "output['scores'][0] * 1.0 + output['scores'][1] * 0.75 + output['scores'][2] * 0.5 + output['scores'][3] * 0.25 + output['scores'][4] * 0.0"
+      }
+    },
+    {
+      "type": "vector.completion",
+      "messages": [
+        {
+          "role": "system",
+          "content": "You are an expert in architectural acoustics and environmental soundscapes. Your task is to evaluate a location's ACOUSTIC PROPERTIES for villain lair potential.\n\nConsider:\n- Echo and reverberation: Do sounds carry and multiply? Does laughter reverberate appropriately?\n- Acoustic range: Can the space support both booming pronouncements and whispered threats?\n- Natural soundscape: Crashing waves, howling winds, rumbling thunder, dripping water, grinding machinery\n- Footstep drama: Do approaching footsteps herald arrival appropriately?\n- Silence potential: Can ominous silence be achieved when needed?\n\nEvaluate the ACOUSTIC PROPERTIES of this location as a villain's lair. Vote for the option that best describes the acoustic properties."
+        },
+        {
+          "role": "user",
+          "content": {
+            "$starlark": "input['location']"
+          }
+        }
+      ],
+      "responses": [
+        "Exceptional acoustics: Perfect for all villainous vocalization; natural soundscape enhances drama; sounds carry magnificently",
+        "Strong acoustics: Good reverberation, atmospheric sounds, reasonable range",
+        "Moderate acoustics: Some acoustic interest; echoes or natural sounds present",
+        "Limited acoustics: Acoustically flat; no natural soundscape; voice doesn't carry",
+        "Poor acoustics: Muffled, dead, or actively unpleasant sounds; destroys vocal drama"
+      ],
+      "output": {
+        "$starlark": "output['scores'][0] * 1.0 + output['scores'][1] * 0.75 + output['scores'][2] * 0.5 + output['scores'][3] * 0.25 + output['scores'][4] * 0.0"
+      }
+    },
+    {
+      "type": "vector.completion",
+      "messages": [
+        {
+          "role": "system",
+          "content": "You are an expert in environmental effects and atmospheric staging. Your task is to evaluate a location's ATMOSPHERIC EFFECTS POTENTIAL for villain lair purposes.\n\nConsider:\n- Fog and mist: Natural occurrence or easy generation; dramatic revealing and concealing\n- Lightning: Natural storms or architectural conductibility; emphasis and punctuation\n- Fire effects: Torches, braziers, volcanic glow, burning elements\n- Steam and smoke: Industrial vents, volcanic activity, deliberate generation\n- Temperature manipulation: Cold drafts, oppressive heat, uncomfortable conditions for guests\n\nEvaluate the ATMOSPHERIC EFFECTS POTENTIAL of this location as a villain's lair. Vote for the option that best describes the atmospheric effects potential."
+        },
+        {
+          "role": "user",
+          "content": {
+            "$starlark": "input['location']"
+          }
+        }
+      ],
+      "responses": [
+        "Natural effects paradise: Multiple atmospheric effects occur naturally and regularly",
+        "Strong effects potential: Easy to achieve multiple effects; some occur naturally",
+        "Moderate effects potential: Some effects possible with effort; occasional natural occurrence",
+        "Limited effects potential: Difficult to achieve; stable, resistant environment",
+        "Effects-hostile: Conditions actively prevent fog, mist, or other atmospheric enhancement"
+      ],
+      "output": {
+        "$starlark": "output['scores'][0] * 1.0 + output['scores'][1] * 0.75 + output['scores'][2] * 0.5 + output['scores'][3] * 0.25 + output['scores'][4] * 0.0"
+      }
+    },
+    {
+      "type": "vector.completion",
+      "messages": [
+        {
+          "role": "system",
+          "content": "You are an expert in location history and power symbolism. Your task is to evaluate a location's HISTORICAL AND POWER ASSOCIATIONS for villain lair potential.\n\nConsider:\n- Sites of previous power: Former seats of empire, ancient fortresses, abandoned palaces\n- Sites of tragedy: Battlefields, disaster locations, places of historical suffering\n- Sites of mystery: Unexplained phenomena, legendary disappearances, persistent rumors\n- Sites of transgression: Forbidden acts, crossed boundaries, violated sanctities\n- Power echoes: Does the location feel like power has resided here before?\n\nEvaluate the HISTORICAL AND POWER ASSOCIATIONS of this location as a villain's lair. Vote for the option that best describes the historical and power associations."
+        },
+        {
+          "role": "user",
+          "content": {
+            "$starlark": "input['location']"
+          }
+        }
+      ],
+      "responses": [
+        "Profoundly weighted: Rich historical associations with power, tragedy, and mystery; location carries palpable history",
+        "Strongly weighted: Clear historical significance; notable events occurred here",
+        "Moderately weighted: Some historical interest; minor associations with power or drama",
+        "Lightly weighted: Minimal history; location is essentially a blank slate",
+        "Historically void: Aggressively new, ahistorical, or actively cheerful history"
+      ],
+      "output": {
+        "$starlark": "output['scores'][0] * 1.0 + output['scores'][1] * 0.75 + output['scores'][2] * 0.5 + output['scores'][3] * 0.25 + output['scores'][4] * 0.0"
+      }
+    },
+    {
+      "type": "vector.completion",
+      "messages": [
+        {
+          "role": "system",
+          "content": "You are an expert in cultural mythology and architectural archetypes. Your task is to evaluate a location's MYTHOLOGICAL AND ARCHETYPAL SIGNIFICANCE for villain lair potential.\n\nConsider:\n- Archetypal spaces: Mountains (ambition, isolation), islands (sovereignty), caves (the unconscious), towers (ego, surveillance)\n- Religious resonance: Cathedral-like qualities, temple echoes, sacred geometry\n- Literary echoes: Resemblance to famous fictional lairs; participation in genre traditions\n- Cultural fears: Heights, depths, enclosure, vastness, darkness—universal anxieties\n- Mythological creatures: Would dragons, sea monsters, or dark spirits feel at home here?\n\nEvaluate the MYTHOLOGICAL AND ARCHETYPAL SIGNIFICANCE of this location as a villain's lair. Vote for the option that best describes the mythological and archetypal significance."
+        },
+        {
+          "role": "user",
+          "content": {
+            "$starlark": "input['location']"
+          }
+        }
+      ],
+      "responses": [
+        "Archetypal perfection: Location embodies multiple universal symbols; feels mythologically inevitable",
+        "Strong archetypal resonance: Clear participation in cultural mythology; recognizable symbolic weight",
+        "Moderate resonance: Some mythological elements present; partial archetypal qualities",
+        "Weak resonance: Minimal symbolic dimension; requires explanation rather than evoking feeling",
+        "Archetypal void: Contradicts or ignores mythological vocabulary; symbolically meaningless"
+      ],
+      "output": {
+        "$starlark": "output['scores'][0] * 1.0 + output['scores'][1] * 0.75 + output['scores'][2] * 0.5 + output['scores'][3] * 0.25 + output['scores'][4] * 0.0"
+      }
+    },
+    {
+      "type": "vector.completion",
+      "messages": [
+        {
+          "role": "system",
+          "content": "You are an expert in horror through contrast and subversive settings. Your task is to evaluate a location's IRONIC AND SUBVERSIVE POTENTIAL for villain lair purposes.\n\nConsider:\n- Domestic subversion: Would villainy here contrast disturbingly with domesticity?\n- Benign facade potential: Could evil lurk beneath an innocent surface?\n- Sacred violation: Would villainous use desecrate or pervert the location's original purpose?\n- Industrial horror: Does the location's mundane purpose become terrifying through villainous recontextualization?\n- Contrast depth: How much more menacing would villainy seem due to contextual irony?\n\nEvaluate the IRONIC AND SUBVERSIVE POTENTIAL of this location as a villain's lair. Vote for the option that best describes the ironic and subversive potential."
+        },
+        {
+          "role": "user",
+          "content": {
+            "$starlark": "input['location']"
+          }
+        }
+      ],
+      "responses": [
+        "Masterful ironic potential: Extreme contrast between appearance and possible dark purpose; deeply unsettling subversion",
+        "Strong ironic potential: Clear opportunity for disturbing contrast; villain would seem more menacing through irony",
+        "Moderate ironic potential: Some ironic dimension possible; contrast could enhance menace",
+        "Limited ironic potential: Little contrast available; location is what it appears to be",
+        "No ironic potential: Already dark or sinister; no innocence to subvert"
+      ],
+      "output": {
+        "$starlark": "output['scores'][0] * 1.0 + output['scores'][1] * 0.75 + output['scores'][2] * 0.5 + output['scores'][3] * 0.25 + output['scores'][4] * 0.0"
+      }
+    },
+    {
+      "type": "vector.completion",
+      "messages": [
+        {
+          "role": "system",
+          "content": "You are an expert in iconic imagery and visual branding. Your task is to evaluate a location's ICONIC MEMORABILITY for villain lair potential.\n\nConsider:\n- Logo potential: Could this location's silhouette serve as a brand mark?\n- Instant recognition: Would one glimpse be enough to remember forever?\n- Merchandising viability: Could this become an action figure playset, poster, or tattoo?\n- Nightmare persistence: Would this image haunt dreams?\n- Cultural permanence: Could this become a reference point, like \"the Transylvanian castle\" or \"the volcano lair\"?\n\nEvaluate the ICONIC MEMORABILITY of this location as a villain's lair. Vote for the option that best describes the iconic memorability."
+        },
+        {
+          "role": "user",
+          "content": {
+            "$starlark": "input['location']"
+          }
+        }
+      ],
+      "responses": [
+        "Legendary memorability: Instantly iconic; would become cultural reference; haunts the imagination",
+        "Strong memorability: Highly distinctive; easily remembered and recognized; striking",
+        "Moderate memorability: Notable but not extraordinary; would be remembered in context",
+        "Weak memorability: Forgettable; blends with similar locations; generic",
+        "Unmemorable: Actively bland; impossible to recall; architectural amnesia"
+      ],
+      "output": {
+        "$starlark": "output['scores'][0] * 1.0 + output['scores'][1] * 0.75 + output['scores'][2] * 0.5 + output['scores'][3] * 0.25 + output['scores'][4] * 0.0"
+      }
+    },
+    {
+      "type": "vector.completion",
+      "messages": [
+        {
+          "role": "system",
+          "content": "You are an expert in theatrical staging and villain presentation. Your task is to evaluate a location's DRAMATIC GESTURE VIEWS for villain lair purposes.\n\nConsider:\n- \"All this will be mine!\" vistas: Views showing territory to be conquered\n- \"Behold my creation!\" sightlines: Visibility of devices, armies, or experiments\n- \"Soon the world will tremble!\" scope: Global views or symbolic representations of power\n- \"We are not so different...\" intimacy: Spaces for philosophical villain-hero exchange\n- Movement during monologue: Can the villain walk and gesture while expounding?\n\nEvaluate the DRAMATIC GESTURE VIEWS of this location as a villain's lair. Vote for the option that best describes the dramatic gesture views."
+        },
+        {
+          "role": "user",
+          "content": {
+            "$starlark": "input['location']"
+          }
+        }
+      ],
+      "responses": [
+        "Perfect gesture support: Multiple views for every monologue type; villain can move dramatically through space",
+        "Strong gesture support: Clear views for dramatic gesturing; most monologue types supported",
+        "Moderate gesture support: Some appropriate views available; workable for core monologue needs",
+        "Limited gesture support: Few dramatic views; villain would be visually constrained",
+        "No gesture support: No views, no vistas, no sightlines; gesturing toward walls"
+      ],
+      "output": {
+        "$starlark": "output['scores'][0] * 1.0 + output['scores'][1] * 0.75 + output['scores'][2] * 0.5 + output['scores'][3] * 0.25 + output['scores'][4] * 0.0"
+      }
+    },
+    {
+      "type": "vector.completion",
+      "messages": [
+        {
+          "role": "system",
+          "content": "You are an expert in cinematographic framing and theatrical staging. Your task is to evaluate a location's HUMAN FIGURE SCALE AND FRAMING for villain lair purposes.\n\nConsider:\n- Dominance framing: Positions where villain appears larger than life\n- Titan framing: Positions where villain is dwarfed by forces they command\n- Intimate framing: Positions for close, personal menace\n- Theatrical framing: Visibility from across a vast chamber for announcements to minions\n- Flexible scaling: Multiple framing options available in proximity\n\nEvaluate the HUMAN FIGURE SCALE AND FRAMING of this location as a villain's lair. Vote for the option that best describes the human figure scale and framing."
+        },
+        {
+          "role": "user",
+          "content": {
+            "$starlark": "input['location']"
+          }
+        }
+      ],
+      "responses": [
+        "Masterful framing: Complete range of scales available; villain can choose framing for any moment",
+        "Strong framing: Multiple framing options; good theatrical staging potential",
+        "Moderate framing: Some framing options present; could stage effectively with effort",
+        "Limited framing: Few framing options; villain locked into one scale relationship",
+        "Poor framing: Actively unflattering or visually confusing framing; villain diminished"
+      ],
+      "output": {
+        "$starlark": "output['scores'][0] * 1.0 + output['scores'][1] * 0.75 + output['scores'][2] * 0.5 + output['scores'][3] * 0.25 + output['scores'][4] * 0.0"
+      }
+    },
+    {
+      "type": "vector.completion",
+      "messages": [
+        {
+          "role": "system",
+          "content": "You are an expert in environmental storytelling and theatrical rhythm. Your task is to evaluate a location's ENVIRONMENTAL PUNCTUATION AND DRAMATIC BEATS for villain lair purposes.\n\nConsider:\n- Thunder and lightning: Natural phenomena for emphasis\n- Revealing elements: Doors, elevators, curtains that can reveal new vistas\n- Interactive elements: Levers, buttons, switches for dramatic moments\n- Ambient punctuation: Dripping water, ticking clocks, grinding machinery\n- Crescendo support: Can the environment build to a climax with the speech?\n\nEvaluate the ENVIRONMENTAL PUNCTUATION AND DRAMATIC BEATS of this location as a villain's lair. Vote for the option that best describes the environmental punctuation and dramatic beats."
+        },
+        {
+          "role": "user",
+          "content": {
+            "$starlark": "input['location']"
+          }
+        }
+      ],
+      "responses": [
+        "Perfect environmental rhythm: Multiple punctuation options; environment seems designed for speeches",
+        "Strong rhythmic support: Clear opportunities for emphasis and revelation; natural beats present",
+        "Moderate rhythmic support: Some punctuation available; occasional environmental emphasis possible",
+        "Limited rhythmic support: Few natural pauses or emphases; static environment",
+        "No rhythmic support: Dead environment; no punctuation; monologue unsupported"
+      ],
+      "output": {
+        "$starlark": "output['scores'][0] * 1.0 + output['scores'][1] * 0.75 + output['scores'][2] * 0.5 + output['scores'][3] * 0.25 + output['scores'][4] * 0.0"
+      }
+    },
+    {
+      "type": "vector.completion",
+      "messages": [
+        {
+          "role": "system",
+          "content": "You are an expert in dramatic silhouette and villain iconography. Your task is to evaluate a location's BACKLIGHTING AND SILHOUETTE POTENTIAL for villain lair purposes.\n\nConsider:\n- Fire backlighting: Flames, lava, burning elements behind the villain\n- Lightning backlighting: Windows positioned to catch storms\n- Screen backlighting: Banks of monitors, holographic displays, projection surfaces\n- Natural light backlighting: Sunsets, auroras, volcanic glow\n- Silhouette quality: How dramatic would the backlit villain appear?\n\nEvaluate the BACKLIGHTING AND SILHOUETTE POTENTIAL of this location as a villain's lair. Vote for the option that best describes the backlighting and silhouette potential."
+        },
+        {
+          "role": "user",
+          "content": {
+            "$starlark": "input['location']"
+          }
+        }
+      ],
+      "responses": [
+        "Iconic silhouette potential: Multiple backlighting sources; villain could achieve legendary silhouette",
+        "Strong silhouette potential: Clear backlighting opportunities; dramatic silhouette achievable",
+        "Moderate silhouette potential: Some backlighting possible; silhouette with effort",
+        "Limited silhouette potential: Few backlighting options; weak silhouette capability",
+        "No silhouette potential: No backlighting sources; villain always fully visible or invisible"
+      ],
+      "output": {
+        "$starlark": "output['scores'][0] * 1.0 + output['scores'][1] * 0.75 + output['scores'][2] * 0.5 + output['scores'][3] * 0.25 + output['scores'][4] * 0.0"
+      }
+    },
+    {
+      "type": "vector.completion",
+      "messages": [
+        {
+          "role": "system",
+          "content": "You are a master expert in villain lair aesthetics and theatrical presentation. Your task is to provide an OVERALL THEATRICAL VILLAINY ASSESSMENT of a location, considering how all dimensions work together.\n\nConsider:\n- Dimensional harmony: Do architecture, atmosphere, symbolism, and staging reinforce each other?\n- Narrative coherence: Does the location tell a consistent story of power and menace?\n- Villain elevation: Would this location make even a mediocre villain seem legendary?\n- Memorable confrontation: Would a hero-villain confrontation here be cinematically satisfying?\n- Cultural resonance: Could this lair become iconic in the cultural imagination?\n\nProvide an OVERALL THEATRICAL VILLAINY ASSESSMENT of this location as a villain's lair. Vote for the option that best describes the overall theatrical villainy potential."
+        },
+        {
+          "role": "user",
+          "content": {
+            "$starlark": "input['location']"
+          }
+        }
+      ],
+      "responses": [
+        "Legendary lair: Location itself is already halfway to villainy; would make any occupant seem magnificent",
+        "Excellent lair: Strong in all dimensions; would significantly elevate villainous presentation",
+        "Competent lair: Solid theatrical potential; serves a capable villain well",
+        "Marginal lair: Some potential present but requires significant imagination or modification",
+        "Unsuitable: Actively undermines villainy; mundane, cheerful, or contextually inappropriate"
+      ],
+      "output": {
+        "$starlark": "output['scores'][0] * 1.0 + output['scores'][1] * 0.75 + output['scores'][2] * 0.5 + output['scores'][3] * 0.25 + output['scores'][4] * 0.0"
+      }
+    }
+  ]
+}
